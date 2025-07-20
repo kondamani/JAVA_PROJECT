@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/kondamani/JAVA_PROJECT.git   # replace with your repooo
-    targetRevision: HEAD
+    targetRevision: main
     path: helm-chart/javapro      # folder where Chart.yaml exists
     helm:
       valueFiles:
