@@ -1,10 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
-kind: ArgoCD
+kind: Application
 metadata:
-  name: example-argocd
-  labels:
-    example: basic
+  name: java-app
+  namespace: argocd
 spec:
-  server:
-    service:
-      type: NodePort
+  project: default
+  source:
+    repoURL: https://github.com/kondamani/JAVA_PROJECT.git   # replace with your repo
+    targetRevision: HEAD
+    path: helm-chart/javapro      # folder where Chart.yaml exists
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: java-app
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
