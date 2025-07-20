@@ -9,7 +9,7 @@ pipeline {
     stage('Checkout') {
       steps {
         sh 'echo passed'
-        git branch: 'main', url: 'https://github.com/kondamani/JAVA_PROJECT.git'
+        //git branch: 'main', url: 'https://github.com/kondamani/JAVA_PROJECT.git'
         sh 'git config --global --add safe.directory /var/lib/jenkins/workspace/java-project'
       }
     }
