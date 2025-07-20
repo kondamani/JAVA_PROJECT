@@ -10,6 +10,7 @@ pipeline {
       steps {
         sh 'echo passed'
         git branch: 'main', url: 'https://github.com/kondamani/JAVA_PROJECT.git'
+        sh 'git config --global --add safe.directory /var/lib/jenkins/workspace/java-project'
       }
     }
     stage('Debug Git Info') {
@@ -22,7 +23,7 @@ pipeline {
           pwd
 
           echo "Git status:"
-          git status
+          git status || echo "Git status failed, maybe not a repo"
         '''
       }
     }
