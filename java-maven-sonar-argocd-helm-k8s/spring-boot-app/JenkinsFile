@@ -51,22 +51,21 @@ pipeline {
             GIT_USER_NAME = "kondamani"
         }
         steps {
-          dir('java-maven-sonar-argocd-helm-k8s') {
+         
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
                     git config user.email "m.kondamani1985@gmail.com"
                     git config user.name "kondamani"
 
                     
-                    sed -i "s/tag: .*/tag: \\"${BUILD_NUMBER}\\"/" eks/helm-chart/javapro/values.yaml
+                    sed -i "s/tag: .*/tag: \\"${BUILD_NUMBER}\\"/" java-maven-sonar-argocd-helm-k8s/eks/helm-chart/javapro/values.yaml
 
-                    git add eks/helm-chart/javapro/values.yaml
+                    git add java-maven-sonar-argocd-helm-k8s/eks/helm-chart/javapro/values.yaml
                     git commit -m "Update image tag to ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
 
                 '''
             }
-        }
       }
     }
   }
