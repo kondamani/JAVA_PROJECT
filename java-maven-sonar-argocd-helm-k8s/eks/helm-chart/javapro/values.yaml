@@ -2,7 +2,7 @@ replicaCount: 2
 
 image:
   repository: kondamani/javaproject
-  tag: "92"
+  tag: "93"
   pullPolicy: IfNotPresent
 
 service:
