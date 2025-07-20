@@ -12,6 +12,20 @@ pipeline {
         git branch: 'main', url: 'https://github.com/kondamani/JAVA_PROJECT.git'
       }
     }
+    stage('Debug Git Info') {
+      steps {
+        sh '''
+          echo "Workspace contents:"
+          ls -al
+
+          echo "Current directory:"
+          pwd
+
+          echo "Git status:"
+          git status
+        '''
+      }
+    }
     stage('Build and Test') {
       steps {
         sh 'ls -ltr'
@@ -58,9 +72,9 @@ pipeline {
                     git config user.name "kondamani"
 
                     
-                    sed -i "s/tag: .*/tag: \\"${BUILD_NUMBER}\\"/" JAVA_PROJECT/java-maven-sonar-argocd-helm-k8s/eks/helm-chart/javapro/values.yaml
+                    sed -i "s/tag: .*/tag: \\"${BUILD_NUMBER}\\"/" java-maven-sonar-argocd-helm-k8s/eks/helm-chart/javapro/values.yaml
 
-                    git add JAVA_PROJECT/java-maven-sonar-argocd-helm-k8s/eks/helm-chart/javapro/values.yaml
+                    git add java-maven-sonar-argocd-helm-k8s/eks/helm-chart/javapro/values.yaml
                     git commit -m "Update image tag to ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
 
