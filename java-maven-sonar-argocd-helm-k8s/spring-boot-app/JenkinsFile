@@ -56,8 +56,8 @@ pipeline {
                     git config user.email "m.kondamani1985@gmail.com"
                     git config user.name "kondamani"
 
-                    cd java-helm-repo/java-app-helm
-                    sed -i "s/tag: .*/tag: \\"${BUILD_NUMBER}\\"/" values.yaml
+                    cd helm-chart/javapro
+                    sed -i "s/tag: .*/tag: \\"${BUILD_NUMBER}\\"/" helm-chart/javapro/values.yaml
 
                     git add values.yaml
                     git commit -m "Update image tag to ${BUILD_NUMBER}"
