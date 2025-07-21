@@ -15,6 +15,7 @@ pipeline {
     stage('Checkout Specific Tag') {
       steps {
         sh '''
+          rm -rf app
           git clone --branch $TAG ${GIT_REPO_URL} app
           cd app
           ls -al
