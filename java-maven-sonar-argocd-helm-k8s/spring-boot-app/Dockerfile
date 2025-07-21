@@ -11,4 +11,5 @@ FROM eclipse-temurin:17-jre-alpine
 WORKDIR /opt/app
 COPY --from=builder /app/target/spring-boot-web.jar app.jar
 
+EXPOSE 8020
 ENTRYPOINT ["java", "-jar", "app.jar"]
