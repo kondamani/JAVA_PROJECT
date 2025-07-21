@@ -27,7 +27,7 @@ pipeline {
       steps {
         withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
           sh '''
-            #!/bin/bash
+          bash -c "
             echo "🔧 Updating values.yaml with image tag $TAG"
             cd app/${WORKDIR}/${HELM_PATH}
             sed -i "s/tag: .*/tag: \\"${TAG//v}\\"/" values.yaml
@@ -40,6 +40,7 @@ pipeline {
             git add .
             git commit -m "🔖 Update image tag to ${TAG}"
             git push origin HEAD:main
+          "  
           '''
         }
       }
