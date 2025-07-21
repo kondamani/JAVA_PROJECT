@@ -85,6 +85,18 @@ pipeline {
         }
       }
     }
+    stage('Scan Docker Image with Trivy') {
+     steps {
+      sh '''
+        echo "🔍 Scanning Docker Image with Trivy"
+        apk add --no-cache curl wget git bash
+        wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_0.49.1_Linux-64bit.tar.gz
+        tar zxvf trivy_0.49.1_Linux-64bit.tar.gz
+        mv trivy /usr/local/bin/
+        trivy image ${DOCKER_IMAGE} || true
+      '''
+     }
+   }
     stage('Tag and Push Git Tag') {
       steps {
         withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
