@@ -24,7 +24,7 @@ pipeline {
 
     stage('Update Helm Chart and Push') {
       steps {
-        withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
+        withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
           sh '''
             echo "🔧 Updating values.yaml with image tag $TAG"
             cd app/${WORKDIR}/${HELM_PATH}
