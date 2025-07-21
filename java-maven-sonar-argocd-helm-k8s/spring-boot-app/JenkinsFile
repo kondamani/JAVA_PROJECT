@@ -85,24 +85,25 @@ pipeline {
         }
       }
     }
-
-    stage('Update Helm Chart and Push') {
+    stage('Tag and Push Git Tag') {
       steps {
         withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
           sh '''
-            echo "🚀 Updating Helm values.yaml with new tag"
-
             git config --global user.email "m.kondamani1985@gmail.com"
             git config --global user.name "${GIT_USER_NAME}"
-
-            sed -i "s/tag: .*/tag: \\"${BUILD_NUMBER}\\"/" java-maven-sonar-argocd-helm-k8s/eks/helm-chart/javapro/values.yaml
-
-            git add java-maven-sonar-argocd-helm-k8s/eks/helm-chart/javapro/values.yaml
-            git commit -m "Update image tag to ${BUILD_NUMBER}" || echo "No changes to commit"
-            git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git HEAD:main
+            git tag -a v${BUILD_NUMBER} -m "Release v${BUILD_NUMBER}"
+            git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git v${BUILD_NUMBER}
           '''
         }
       }
     }
+     stage('Trigger Deployment Pipeline') {
+      steps {
+        build job: 'java-deploy',
+          parameters: [
+            string(name: 'TAG', value: "v${BUILD_NUMBER}")
+          ]
+      }
+    } 
   }
 }
