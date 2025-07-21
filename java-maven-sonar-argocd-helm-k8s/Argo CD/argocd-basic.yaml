@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/kondamani/JAVA_PROJECT.git   # replace with your repooooo
+    repoURL: https://github.com/kondamani/JAVA_PROJECT.git   # replace with your repooooooo
     targetRevision: main
     path: helm-chart/javapro      # folder where Chart.yaml existsss
     helm:
