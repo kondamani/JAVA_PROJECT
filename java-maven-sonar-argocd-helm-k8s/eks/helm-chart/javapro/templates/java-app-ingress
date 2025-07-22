@@ -12,6 +12,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
+    - Host: java-app.example.com
       http:
         paths:
           - path: /
